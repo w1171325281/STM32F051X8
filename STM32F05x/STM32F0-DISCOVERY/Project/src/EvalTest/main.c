@@ -253,7 +253,7 @@ int main(void)
         KeyState = 1; // pressed
         // Turn on Blue LED during 1s each time B1 is pressed
         TURNONLD4;
-        delay_ms(1000);
+        delay_ms(3000);
         TURNOFFLD4;
 
         break;
