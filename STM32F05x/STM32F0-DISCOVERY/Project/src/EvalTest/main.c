@@ -247,7 +247,7 @@ int main(void)
   {
     if(GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0))
     {
-      delay_ms(50);
+      delay_ms(500);
       if(GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0))
       {
         KeyState = 1; // pressed
