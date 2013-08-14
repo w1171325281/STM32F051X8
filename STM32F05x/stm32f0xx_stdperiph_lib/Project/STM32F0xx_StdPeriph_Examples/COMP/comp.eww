@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<workspace>
+  <project>
+    <path>$WS_DIR$\COMP_AnalogWatchdog\COMP_AnalogWatchdog.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\COMP_LDR\COMP_LDR.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\PulseWidthMeasurement\PulseWidthMeasurement.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\PWMSignalControl\PWMSignalControl.ewp</path>
+  </project>
+  <batchBuild>
+    <batchDefinition>
+      <name>All</name>
+      <member>
+        <project>COMP_AnalogWatchdog</project>
+        <configuration>STM320518-EVAL</configuration>
+      </member>
+      <member>
+        <project>COMP_LDR</project>
+        <configuration>STM320518-EVAL</configuration>
+      </member>
+      <member>
+        <project>PulseWidthMeasurement</project>
+        <configuration>STM320518-EVAL</configuration>
+      </member>
+      <member>
+        <project>PWMSignalControl</project>
+        <configuration>STM320518-EVAL</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+</workspace>
+
+

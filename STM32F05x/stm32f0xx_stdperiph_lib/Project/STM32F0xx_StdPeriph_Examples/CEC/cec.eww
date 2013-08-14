@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<workspace>
+  <project>
+    <path>$WS_DIR$\Data_Exchange\Data_Exchange.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\Listen_Mode\Listen_Mode.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\Multi_Address\Multi_Address.ewp</path>
+  </project>
+  <batchBuild>
+    <batchDefinition>
+      <name>All</name>
+      <member>
+        <project>Data_Exchange</project>
+        <configuration>STM320518-EVAL</configuration>
+      </member>
+      <member>
+        <project>Listen_Mode</project>
+        <configuration>STM320518-EVAL</configuration>
+      </member>
+      <member>
+        <project>Multi_Address</project>
+        <configuration>STM320518-EVAL</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+</workspace>
+
+

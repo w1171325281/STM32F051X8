@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<workspace>
+  <project>
+    <path>$WS_DIR$\ADC_TIM3\ADC_TIM3.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\FLASH_RAM\FLASH_RAM.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\RAM_DAC\RAM_DAC.ewp</path>
+  </project>
+  <batchBuild>
+    <batchDefinition>
+      <name>All</name>
+      <member>
+        <project>ADC_TIM3</project>
+        <configuration>STM320518-EVAL</configuration>
+      </member>
+      <member>
+        <project>RAM_DAC</project>
+        <configuration>STM320518-EVAL</configuration>
+      </member>
+      <member>
+        <project>FLASH_RAM</project>
+        <configuration>STM320518-EVAL</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+</workspace>
+
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<workspace>
+  <project>
+    <path>$WS_DIR$\Program\Program.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\Write_Protection\Write_Protection.ewp</path>
+  </project>
+  <batchBuild>
+    <batchDefinition>
+      <name>All</name>
+      <member>
+        <project>Program</project>
+        <configuration>STM320518-EVAL</configuration>
+      </member>
+      <member>
+        <project>Write_Protection</project>
+        <configuration>STM320518-EVAL</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+</workspace>
+
+

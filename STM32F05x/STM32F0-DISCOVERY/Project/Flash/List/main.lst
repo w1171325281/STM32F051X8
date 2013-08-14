@@ -1,0 +1,542 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.60.1.5097/W32 for ARM      30/Jul/2013  16:37:28 #
+# Copyright 1999-2013 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  thumb                                                    #
+#    Endian       =  little                                                   #
+#    Source file  =  D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
+#                    ct\src\EvalTest\main.c                                   #
+#    Command line =  D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
+#                    ct\src\EvalTest\main.c -D VECT_TAB_FLASH -lcN            #
+#                    D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
+#                    ct\Flash\List\ -o D:\IAR\arm\examples\ST\STM32F05x\STM32 #
+#                    F0-DISCOVERY\Project\Flash\Obj\ --no_cse --no_unroll     #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=Cortex-M0  #
+#                    -e --fpu=None --dlib_config                              #
+#                    D:\IAR\arm\INC\c\DLib_Config_Normal.h --preinclude       #
+#                    stm32f0xx_conf.h -I D:\IAR\arm\examples\ST\STM32F05x\STM #
+#                    32F0-DISCOVERY\Project\ -I D:\IAR\arm\examples\ST\STM32F #
+#                    05x\STM32F0-DISCOVERY\Project\src\EvalTest\ -I           #
+#                    D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
+#                    ct\..\Libraries\STM32F0xx_StdPeriph_Driver\inc\ -I       #
+#                    D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
+#                    ct\..\Libraries\CMSIS\Device\ST\STM32F0xx\Include\ -I    #
+#                    D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
+#                    ct\..\Libraries\CMSIS\Include\ -Ol --use_c++_inline -I   #
+#                    D:\IAR\arm\CMSIS\Include\                                #
+#    List file    =  D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
+#                    ct\Flash\List\main.lst                                   #
+#    Object file  =  D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
+#                    ct\Flash\Obj\main.o                                      #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Project\src\EvalTest\main.c
+      1          /******************** (C) COPYRIGHT 2012 STMicroelectronics ********************
+      2          * File Name          : main.c
+      3          * Author             : MCD Tools development Team
+      4          * Date First Issued  : January 2012
+      5          * Description        : This code is used for MB1034 board test
+      6          ********************************************************************************
+      7          * History:
+      8          **
+      9          *
+     10          ********************************************************************************/
+     11          
+     12          /* Includes ------------------------------------------------------------------*/
+     13          #include "main.h"
+     14          #include "stm32f0xx_conf.h"
+     15          
+     16          
+     17          /* Private typedef -----------------------------------------------------------*/
+     18          
+     19          #define TEST_LSE_no
+     20          
+     21          /* Private define ------------------------------------------------------------*/
+     22          #define  MS_DELAY_HSI (1000)
+     23          #define  SECOND_DELAY (1000*MS_DELAY_HSI)
+     24          
+     25          // LEDs definition: LD3~LD4
+     26          #define  GPIO_LED_LD3   GPIO_Pin_9
+     27          #define  GPIO_LED_LD4   GPIO_Pin_8
+     28          
+     29          #define GPIO_HIGH(a,b) 		a->BSRR = b
+     30          #define GPIO_LOW(a,b)		a->BRR = b
+     31          #define GPIO_TOGGLE(a,b) 	a->ODR ^= b 
+     32          
+     33          #define  TURNONLD3   GPIO_HIGH(GPIOC, GPIO_LED_LD3)
+     34          #define  TURNOFFLD3  GPIO_LOW(GPIOC, GPIO_LED_LD3)
+     35          #define  TURNONLD4   GPIO_HIGH(GPIOC, GPIO_LED_LD4)
+     36          #define  TURNOFFLD4  GPIO_LOW(GPIOC, GPIO_LED_LD4)
+     37          
+     38          #define  LSE_FAIL_FLAG  0x80
+     39          #define  LSE_PASS_FLAG  0x100
+     40          
+     41          /* Private consts ------------------------------------------------------------*/
+     42          
+     43          /* Private variables ---------------------------------------------------------*/
+     44          
+     45          
+     46          
+     47          uint32_t TickValue=0;
+     48          /* Private variables ---------------------------------------------------------*/
+     49          
+     50          /*
+     51          uint32_t LSE_Delay;
+     52          uint32_t BlinkSpeed, count, i;
+     53          uint32_t KeyState;
+     54          */
+     55          /* Private function prototypes -----------------------------------------------*/
+     56          
+     57          /* Private functions ---------------------------------------------------------*/
+     58          
+     59          //------------------------------------------------------------------------------
+     60          // Function Name  : LEDs_Init and User button
+     61          // Description    : LEDs initialization
+     62          //------------------------------------------------------------------------------
+     63          void Init_GPIO(void)
+     64          {
+     65            GPIO_InitTypeDef GPIO_InitStructure;
+     66            
+     67            // Enable GPIOA, GPIOC clocks
+     68            RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOC, ENABLE);
+     69            
+     70            GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9;
+     71            GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
+     72            GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+     73            GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;  
+     74            GPIO_Init(GPIOC, &GPIO_InitStructure);
+     75             
+     76          
+     77            // Init User/Wakeup button B1
+     78            GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;		
+     79            GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+     80            GPIO_Init(GPIOA, &GPIO_InitStructure);
+     81          }
+     82          
+     83          
+     84          void TimingDelay_Decrement(void)
+     85          {
+     86              TickValue--;  
+     87          }
+     88          
+     89          
+     90          //------------------------------------------------------------------------------
+     91          // Function Name : delay
+     92          // Description   : delay for some time in counts(rough)
+     93          // Input         : counts is how many counts of time to delay
+     94          //------------------------------------------------------------------------------
+     95          void delay(uint32_t counts)
+     96          {
+     97            while(counts-- != 0)
+     98              ;
+     99          }
+    100          
+    101          //------------------------------------------------------------------------------
+    102          // Function Name : delay_ms
+    103          // Description   : delay for some time in ms unit(accurate)
+    104          // Input         : n_ms is how many ms of time to delay
+    105          //------------------------------------------------------------------------------
+    106          void delay_ms(uint32_t n_ms)
+    107          {
+    108            // SysTick interrupt each 1000 Hz with HCLK equal to 32MHz
+    109            // - 30 to compensate the overhead of this sub routine
+    110            SysTick_Config(8000*PLL_MUL_X - 30);
+    111            // Enable the SysTick Counter
+    112          
+    113            TickValue = n_ms;
+    114            while(TickValue == n_ms)
+    115              ;
+    116          
+    117            // SysTick interrupt each 1000 Hz with HCLK equal to 32MHz
+    118            SysTick_Config(8000*PLL_MUL_X);
+    119            while(TickValue != 0)
+    120              ;
+    121          
+    122          
+    123          }
+    124          
+    125          //------------------------------------------------------------------------------
+    126          // Function Name : delay_10us
+    127          // Description   : delay for some time in 10us unit(accurate)
+    128          // Input         : n_10us is how many 10us of time to delay
+    129          //------------------------------------------------------------------------------
+    130          void delay_10us(uint32_t n_10us)
+    131          {
+    132            // Enable the SysTick Counter
+    133            TickValue = n_10us;
+    134            // SysTick interrupt each 10us with HCLK equal to 24MHz
+    135            // - 30 to compensate the overhead of this sub routine
+    136            SysTick_Config(80*PLL_MUL_X - 30);
+    137            while(TickValue == n_10us)
+    138              ;
+    139          
+    140            // SysTick interrupt each 10us with HCLK equal to 24MHz
+    141            SysTick_Config(80 * PLL_MUL_X);
+    142            while(TickValue != 0)
+    143              ;
+    144          
+    145          }
+    146          
+    147           
+    148          /*******************************************************************************
+    149          * Function Name  : main
+    150          * Description    : Main program.
+    151          * Input          : None
+    152          * Output         : None
+    153          * Return         : None
+    154          *******************************************************************************/
+    155          int main(void)
+    156          {
+    157            uint8_t i;
+    158            uint32_t count ;
+    159            uint32_t LSE_Delay;
+    160            uint32_t BlinkSpeed;
+    161            uint8_t KeyState; 
+    162          
+    163            #ifdef DEBUG
+    164              debug();
+    165            #endif
+    166          
+    167            
+    168            // Initialize variables
+    169            LSE_Delay = 0;
+    170            BlinkSpeed = 6;
+    171            KeyState = 0; // released
+    172          
+    173            
+    174            // Init LEDs LD3&LD4, and user button
+    175            Init_GPIO();
+    176          
+    177          
+    178            // Wait till HSE is ready - HSE_RDY @ bit 17
+    179            while((RCC->CR & (1L<<17)) == 0)
+    180            {
+    181              if((RCC->CR & (1<<17)) == 0)
+    182                delay(1000);
+    183              if((RCC->CR & (1<<17)) == 0)
+    184                delay(SECOND_DELAY);
+    185              if((RCC->CR & (1<<17)) == 0)
+    186                // turn on blue LED LD4
+    187                TURNONLD4;
+    188              if((RCC->CR & (1<<17)) == 0)
+    189                delay(SECOND_DELAY);
+    190              if((RCC->CR & (1<<17)) == 0)
+    191                // turn off blue LED LD4
+    192                TURNOFFLD4;
+    193            }
+    194            
+    195            TURNOFFLD4;
+    196              // HSE passes
+    197            
+    198            // Flash no wait state
+    199            *(uint32_t *)0x40022000 = 0x00;
+    200            
+    201            // for SILICON_CHIP configuration
+    202            // PLLCLK = 8MHz * 3 = 24 MHz
+    203            RCC_PLLConfig(RCC_PLLSource_PREDIV1, RCC_PLLMul_2);
+    204            
+    205            // Enable PLL
+    206            RCC_PLLCmd(ENABLE);
+    207            
+    208            
+    209            // Wait till PLL is ready - PLL_RDY @ bit 25
+    210            while((RCC->CR & (1L<<25)) == 0)
+    211            {
+    212              if((RCC->CR & (1<<25)) == 0)
+    213                delay(1000);
+    214              if(((RCC->CR) & (1L<<25)) == 0)
+    215                delay(SECOND_DELAY);
+    216              if((RCC->CR & (1<<25)) == 0)
+    217                // turn on blue LED LD4
+    218                TURNONLD4;
+    219              if((RCC->CR & (1<<25)) == 0)
+    220                delay(SECOND_DELAY);
+    221              if((RCC->CR & (1<<25)) == 0)
+    222                // turn off blue LED LD4
+    223                TURNOFFLD4;
+    224            }
+    225          
+    226            // Select PLL as system clock source
+    227            RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK);
+    228            // Wait till PLL is used as system clock source
+    229            while(RCC_GetSYSCLKSource() != 0x08)
+    230              ;
+    231          
+    232            // Enable PWR clock
+    233            RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
+    234            // Enable access to the backup register, so LSE can be enabled
+    235            PWR_BackupAccessCmd(ENABLE);
+    236            
+    237          
+    238          
+    239          
+    240          
+    241          #ifdef TEST_LSE
+    242            // Enable LSE (Low Speed External Oscillation)
+    243            RCC_LSEConfig(RCC_LSE_ON);
+    244          
+    245            // first loop, wait for press of B1 button
+    246            while(1)
+    247            {
+    248              if(GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0))
+    249              {
+    250                delay_ms(50);
+    251                if(GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0))
+    252                {
+    253                  KeyState = 1; // pressed
+    254                  // Turn on Blue LED during 1s each time B1 is pressed
+    255                  TURNONLD4;
+    256                  delay_ms(1000);
+    257                  TURNOFFLD4;
+    258          
+    259                  break;
+    260                }
+    261              }
+    262              
+    263              TURNONLD3;
+    264              
+    265              if(LSE_Delay & LSE_FAIL_FLAG)
+    266                TURNONLD4;
+    267              // delay_ms(1000);
+    268              // delay 1s in below loop
+    269              for(i=0; i<100; i++)
+    270              {
+    271                delay_ms(10);
+    272                if(GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0))
+    273                  if(KeyState == 0)
+    274                    break;
+    275              }
+    276              
+    277              if(i<100)
+    278                continue;
+    279              
+    280              if(LSE_Delay < LSE_FAIL_FLAG)
+    281                LSE_Delay += 10;
+    282              TURNOFFLD3;
+    283              TURNOFFLD4;
+    284          //    delay_ms(1000);
+    285              // delay 1s in below loop
+    286              
+    287              for(i=0; i<100; i++)
+    288              {
+    289                delay_ms(10);
+    290                if(GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0))
+    291                  if(KeyState == 0)
+    292                    break;
+    293              }
+    294              
+    295              if(i<100)
+    296                continue;
+    297              
+    298              if(LSE_Delay < LSE_FAIL_FLAG)
+    299                LSE_Delay += 10;
+    300              
+    301              // LSE_FAIL_FLAG = 0x80
+    302              if(LSE_Delay >= LSE_FAIL_FLAG)
+    303                ;
+    304              else if(LSE_Delay >= 60)
+    305              {
+    306                // check whether LSE is ready, with 6 seconds timeout
+    307                if(RCC_GetFlagStatus(RCC_FLAG_LSERDY) == RESET)
+    308                  // set flag: LSE FAIL
+    309                  LSE_Delay |= LSE_FAIL_FLAG;
+    310                else
+    311                  // set flag: LSE PASS
+    312                  LSE_Delay |= LSE_PASS_FLAG;
+    313                // Disable LSE
+    314                RCC_LSEConfig(RCC_LSE_OFF);
+    315              }
+    316            }
+    317          #else
+    318            LSE_Delay |= LSE_PASS_FLAG;  
+    319          #endif
+    320            
+    321            BlinkSpeed = 1;
+    322            count = 0;
+    323            
+    324            // main loop
+    325            while(1)
+    326            {
+    327              if(GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0))
+    328              {
+    329                if(KeyState == 0)
+    330                {
+    331                  delay_ms(50);
+    332                  if(GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0))
+    333                  {
+    334                    KeyState = 1; // pressed
+    335                    // BlinkSpeed: 1 -> 2 -> 0, then re-cycle
+    336                    // Turn on LD4 Blue LED during 1s each time B1 is pressed
+    337                    TURNONLD4;
+    338                    delay_ms(1000);
+    339                    TURNOFFLD4;
+    340          
+    341                    BlinkSpeed++;
+    342                    if(BlinkSpeed == 3)
+    343                      BlinkSpeed = 0;
+    344                  }
+    345                }
+    346              }
+    347              else
+    348              {
+    349                if(KeyState == 1)
+    350                {
+    351                  delay_ms(50);
+    352                  if(0 == GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0))
+    353                  {
+    354                    KeyState = 0; // released
+    355                  }
+    356                }
+    357              }
+    358              for(i=0; i<10; i++)
+    359              {
+    360                delay_ms(10);
+    361                if(GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0))
+    362                  if(KeyState == 0)
+    363                    break;
+    364              }
+    365              if(i<10)
+    366                continue;
+    367             
+    368              count++;
+    369              
+    370              if(LSE_Delay < 60)
+    371                LSE_Delay += 1;
+    372              // LSE_FAIL_FLAG = 0x80
+    373              else if(LSE_Delay >= LSE_FAIL_FLAG)
+    374                ;
+    375              else if(LSE_Delay >= 60)
+    376              {
+    377                // check whether LSE is ready, with 6 seconds timeout
+    378                if(RCC_GetFlagStatus(RCC_FLAG_LSERDY) == RESET)
+    379                  // set flag: LSE FAIL
+    380                  LSE_Delay |= LSE_FAIL_FLAG;
+    381                else
+    382                  // set flag: LSE PASS
+    383                  LSE_Delay |= LSE_PASS_FLAG;
+    384                // Disable LSE
+    385                RCC_LSEConfig(RCC_LSE_OFF);
+    386              }
+    387              if(BlinkSpeed == 2)
+    388              {
+    389                if(0 == (count % 2))
+    390                  TURNONLD3;
+    391                else
+    392                  TURNOFFLD3;
+    393              }
+    394              else if(BlinkSpeed == 1)
+    395              {
+    396                if(2 == (count % 4))
+    397                  TURNONLD3;
+    398                if(0 == (count % 4))
+    399                  TURNOFFLD3;
+    400              }
+    401              else
+    402                TURNOFFLD3;
+    403              if(LSE_Delay & LSE_FAIL_FLAG)
+    404              {
+    405                if(10 == (count % 20))
+    406                  TURNONLD4;
+    407                if(0 == (count % 20))
+    408                  TURNOFFLD4;
+    409              }
+    410            }
+    411          
+    412          }
+    413          
+    414          #ifdef  DEBUG
+    415          /*******************************************************************************
+    416          * Function Name  : assert_failed
+    417          * Description    : Reports the name of the source file and the source line number
+    418          *                  where the assert_param error has occurred.
+    419          * Input          : - file: pointer to the source file name
+    420          *                  - line: assert_param error line source number
+    421          * Output         : None
+    422          * Return         : None
+    423          *******************************************************************************/
+    424          void assert_failed(uint8_t* file, uint32_t line)
+    425          { 
+    426            /* User can add his own implementation to report the file name and line number,
+    427               ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+    428          
+    429            /* Infinite loop */
+    430            while (1)
+    431            {
+    432            }
+    433          }
+    434          #endif
+    435          /******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+      16   Init_GPIO
+        16   -> GPIO_Init
+        16   -> RCC_AHBPeriphClockCmd
+      20   NVIC_SetPriority
+       8   SysTick_Config
+         8   -> NVIC_SetPriority
+       0   TimingDelay_Decrement
+       4   delay
+       8   delay_10us
+         8   -> SysTick_Config
+       8   delay_ms
+         8   -> SysTick_Config
+      24   main
+        24   -> GPIO_ReadInputDataBit
+        24   -> Init_GPIO
+        24   -> PWR_BackupAccessCmd
+        24   -> RCC_APB1PeriphClockCmd
+        24   -> RCC_GetFlagStatus
+        24   -> RCC_GetSYSCLKSource
+        24   -> RCC_LSEConfig
+        24   -> RCC_PLLCmd
+        24   -> RCC_PLLConfig
+        24   -> RCC_SYSCLKConfig
+        24   -> __aeabi_uidivmod
+        24   -> delay
+        24   -> delay_ms
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable5
+       4  ??DataTable5_1
+       4  ??DataTable5_2
+       4  ??DataTable5_3
+       4  ??DataTable5_4
+       4  ??DataTable5_5
+       4  ??DataTable6
+       4  ??DataTable6_1
+       4  ??DataTable6_2
+       4  ??DataTable6_3
+       4  ??DataTable6_4
+       4  ??DataTable6_5
+       4  ??DataTable6_6
+       4  ??DataTable6_7
+      68  Init_GPIO
+     140  NVIC_SetPriority
+      48  SysTick_Config
+       4  TickValue
+      12  TimingDelay_Decrement
+      12  delay
+      38  delay_10us
+      38  delay_ms
+     606  main
+
+ 
+     4 bytes in section .bss
+ 1 018 bytes in section .text
+ 
+ 1 018 bytes of CODE memory
+     4 bytes of DATA memory
+
+Errors: none
+Warnings: none
