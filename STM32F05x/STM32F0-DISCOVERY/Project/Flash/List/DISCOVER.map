@@ -1,35 +1,37 @@
 ###############################################################################
 #                                                                             #
-# IAR ELF Linker V6.60.1.5097/W32 for ARM               30/Jul/2013  16:37:30 #
+# IAR ELF Linker V6.60.1.5097/W32 for ARM               14/Aug/2013  10:54:38 #
 # Copyright 2007-2013 IAR Systems AB.                                         #
 #                                                                             #
-#    Output file  =  D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
-#                    ct\Flash\Exe\DISCOVER.out                                #
-#    Map file     =  D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
-#                    ct\Flash\List\DISCOVER.map                               #
-#    Command line =  D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
-#                    ct\Flash\Obj\main.o D:\IAR\arm\examples\ST\STM32F05x\STM #
-#                    32F0-DISCOVERY\Project\Flash\Obj\startup_stm32f0xx.o     #
-#                    D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
-#                    ct\Flash\Obj\stm32f0xx_gpio.o                            #
-#                    D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
-#                    ct\Flash\Obj\stm32f0xx_it.o                              #
-#                    D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
-#                    ct\Flash\Obj\stm32f0xx_misc.o                            #
-#                    D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
-#                    ct\Flash\Obj\stm32f0xx_pwr.o                             #
-#                    D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
-#                    ct\Flash\Obj\stm32f0xx_rcc.o                             #
-#                    D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
-#                    ct\Flash\Obj\system_stm32f0xx.o --redirect               #
-#                    _Printf=_PrintfFull --redirect _Scanf=_ScanfFull -o      #
-#                    D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
-#                    ct\Flash\Exe\DISCOVER.out --map                          #
-#                    D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
-#                    ct\Flash\List\DISCOVER.map --config                      #
-#                    D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
-#                    ct\stm32f0xx_flash.icf --semihosting --entry             #
-#                    __iar_program_start --vfe                                #
+#    Output file  =  C:\Users\wenjian\Documents\GitHub\STM32F051X8\STM32F05x\ #
+#                    STM32F0-DISCOVERY\Project\Flash\Exe\DISCOVER.out         #
+#    Map file     =  C:\Users\wenjian\Documents\GitHub\STM32F051X8\STM32F05x\ #
+#                    STM32F0-DISCOVERY\Project\Flash\List\DISCOVER.map        #
+#    Command line =  C:\Users\wenjian\Documents\GitHub\STM32F051X8\STM32F05x\ #
+#                    STM32F0-DISCOVERY\Project\Flash\Obj\main.o               #
+#                    C:\Users\wenjian\Documents\GitHub\STM32F051X8\STM32F05x\ #
+#                    STM32F0-DISCOVERY\Project\Flash\Obj\startup_stm32f0xx.o  #
+#                    C:\Users\wenjian\Documents\GitHub\STM32F051X8\STM32F05x\ #
+#                    STM32F0-DISCOVERY\Project\Flash\Obj\stm32f0xx_gpio.o     #
+#                    C:\Users\wenjian\Documents\GitHub\STM32F051X8\STM32F05x\ #
+#                    STM32F0-DISCOVERY\Project\Flash\Obj\stm32f0xx_it.o       #
+#                    C:\Users\wenjian\Documents\GitHub\STM32F051X8\STM32F05x\ #
+#                    STM32F0-DISCOVERY\Project\Flash\Obj\stm32f0xx_misc.o     #
+#                    C:\Users\wenjian\Documents\GitHub\STM32F051X8\STM32F05x\ #
+#                    STM32F0-DISCOVERY\Project\Flash\Obj\stm32f0xx_pwr.o      #
+#                    C:\Users\wenjian\Documents\GitHub\STM32F051X8\STM32F05x\ #
+#                    STM32F0-DISCOVERY\Project\Flash\Obj\stm32f0xx_rcc.o      #
+#                    C:\Users\wenjian\Documents\GitHub\STM32F051X8\STM32F05x\ #
+#                    STM32F0-DISCOVERY\Project\Flash\Obj\system_stm32f0xx.o   #
+#                    --redirect _Printf=_PrintfFull --redirect                #
+#                    _Scanf=_ScanfFull -o C:\Users\wenjian\Documents\GitHub\S #
+#                    TM32F051X8\STM32F05x\STM32F0-DISCOVERY\Project\Flash\Exe #
+#                    \DISCOVER.out --map C:\Users\wenjian\Documents\GitHub\ST #
+#                    M32F051X8\STM32F05x\STM32F0-DISCOVERY\Project\Flash\List #
+#                    \DISCOVER.map --config C:\Users\wenjian\Documents\GitHub #
+#                    \STM32F051X8\STM32F05x\STM32F0-DISCOVERY\Project\stm32f0 #
+#                    xx_flash.icf --semihosting --entry __iar_program_start   #
+#                    --vfe                                                    #
 #                                                                             #
 #                                                                             #
 ###############################################################################
@@ -135,7 +137,7 @@ Zero (__iar_zero_init3)
 
     Module               ro code  ro data  rw data
     ------               -------  -------  -------
-D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Project\Flash\Obj: [1]
+C:\Users\wenjian\Documents\GitHub\STM32F051X8\STM32F05x\STM32F0-DISCOVERY\Project\Flash\Obj: [1]
     main.o                   984                 4
     startup_stm32f0xx.o      266
     stm32f0xx_gpio.o         188
@@ -234,7 +236,7 @@ exit                    0x08000967    0x8  Code  Gb  exit.o [3]
 main                    0x08000219  0x25e  Code  Gb  main.o [1]
 
 
-[1] = D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Project\Flash\Obj
+[1] = C:\Users\wenjian\Documents\GitHub\STM32F051X8\STM32F05x\STM32F0-DISCOVERY\Project\Flash\Obj
 [2] = command line
 [3] = dl6M_tln.a
 [4] = rt6M_tl.a

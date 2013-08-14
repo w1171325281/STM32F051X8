@@ -1,40 +1,43 @@
 ###############################################################################
 #                                                                             #
-# IAR ANSI C/C++ Compiler V6.60.1.5097/W32 for ARM      30/Jul/2013  16:37:28 #
+# IAR ANSI C/C++ Compiler V6.60.1.5097/W32 for ARM      14/Aug/2013  10:54:36 #
 # Copyright 1999-2013 IAR Systems AB.                                         #
 #                                                                             #
 #    Cpu mode     =  thumb                                                    #
 #    Endian       =  little                                                   #
-#    Source file  =  D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
-#                    ct\src\EvalTest\main.c                                   #
-#    Command line =  D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
-#                    ct\src\EvalTest\main.c -D VECT_TAB_FLASH -lcN            #
-#                    D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
-#                    ct\Flash\List\ -o D:\IAR\arm\examples\ST\STM32F05x\STM32 #
-#                    F0-DISCOVERY\Project\Flash\Obj\ --no_cse --no_unroll     #
-#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
-#                    --no_scheduling --debug --endian=little --cpu=Cortex-M0  #
-#                    -e --fpu=None --dlib_config                              #
+#    Source file  =  C:\Users\wenjian\Documents\GitHub\STM32F051X8\STM32F05x\ #
+#                    STM32F0-DISCOVERY\Project\src\EvalTest\main.c            #
+#    Command line =  C:\Users\wenjian\Documents\GitHub\STM32F051X8\STM32F05x\ #
+#                    STM32F0-DISCOVERY\Project\src\EvalTest\main.c -D         #
+#                    VECT_TAB_FLASH -lcN C:\Users\wenjian\Documents\GitHub\ST #
+#                    M32F051X8\STM32F05x\STM32F0-DISCOVERY\Project\Flash\List #
+#                    \ -o C:\Users\wenjian\Documents\GitHub\STM32F051X8\STM32 #
+#                    F05x\STM32F0-DISCOVERY\Project\Flash\Obj\ --no_cse       #
+#                    --no_unroll --no_inline --no_code_motion --no_tbaa       #
+#                    --no_clustering --no_scheduling --debug --endian=little  #
+#                    --cpu=Cortex-M0 -e --fpu=None --dlib_config              #
 #                    D:\IAR\arm\INC\c\DLib_Config_Normal.h --preinclude       #
-#                    stm32f0xx_conf.h -I D:\IAR\arm\examples\ST\STM32F05x\STM #
-#                    32F0-DISCOVERY\Project\ -I D:\IAR\arm\examples\ST\STM32F #
-#                    05x\STM32F0-DISCOVERY\Project\src\EvalTest\ -I           #
-#                    D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
-#                    ct\..\Libraries\STM32F0xx_StdPeriph_Driver\inc\ -I       #
-#                    D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
-#                    ct\..\Libraries\CMSIS\Device\ST\STM32F0xx\Include\ -I    #
-#                    D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
-#                    ct\..\Libraries\CMSIS\Include\ -Ol --use_c++_inline -I   #
-#                    D:\IAR\arm\CMSIS\Include\                                #
-#    List file    =  D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
-#                    ct\Flash\List\main.lst                                   #
-#    Object file  =  D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Proje #
-#                    ct\Flash\Obj\main.o                                      #
+#                    stm32f0xx_conf.h -I C:\Users\wenjian\Documents\GitHub\ST #
+#                    M32F051X8\STM32F05x\STM32F0-DISCOVERY\Project\ -I        #
+#                    C:\Users\wenjian\Documents\GitHub\STM32F051X8\STM32F05x\ #
+#                    STM32F0-DISCOVERY\Project\src\EvalTest\ -I               #
+#                    C:\Users\wenjian\Documents\GitHub\STM32F051X8\STM32F05x\ #
+#                    STM32F0-DISCOVERY\Project\..\Libraries\STM32F0xx_StdPeri #
+#                    ph_Driver\inc\ -I C:\Users\wenjian\Documents\GitHub\STM3 #
+#                    2F051X8\STM32F05x\STM32F0-DISCOVERY\Project\..\Libraries #
+#                    \CMSIS\Device\ST\STM32F0xx\Include\ -I                   #
+#                    C:\Users\wenjian\Documents\GitHub\STM32F051X8\STM32F05x\ #
+#                    STM32F0-DISCOVERY\Project\..\Libraries\CMSIS\Include\    #
+#                    -Ol --use_c++_inline -I D:\IAR\arm\CMSIS\Include\        #
+#    List file    =  C:\Users\wenjian\Documents\GitHub\STM32F051X8\STM32F05x\ #
+#                    STM32F0-DISCOVERY\Project\Flash\List\main.lst            #
+#    Object file  =  C:\Users\wenjian\Documents\GitHub\STM32F051X8\STM32F05x\ #
+#                    STM32F0-DISCOVERY\Project\Flash\Obj\main.o               #
 #                                                                             #
 #                                                                             #
 ###############################################################################
 
-D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Project\src\EvalTest\main.c
+C:\Users\wenjian\Documents\GitHub\STM32F051X8\STM32F05x\STM32F0-DISCOVERY\Project\src\EvalTest\main.c
       1          /******************** (C) COPYRIGHT 2012 STMicroelectronics ********************
       2          * File Name          : main.c
       3          * Author             : MCD Tools development Team
@@ -284,7 +287,7 @@ D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Project\src\EvalTest\main.c
     247            {
     248              if(GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0))
     249              {
-    250                delay_ms(50);
+    250                delay_ms(500);
     251                if(GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0))
     252                {
     253                  KeyState = 1; // pressed
@@ -305,7 +308,7 @@ D:\IAR\arm\examples\ST\STM32F05x\STM32F0-DISCOVERY\Project\src\EvalTest\main.c
     268              // delay 1s in below loop
     269              for(i=0; i<100; i++)
     270              {
-    271                delay_ms(10);
+    271                delay_ms(100);
     272                if(GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0))
     273                  if(KeyState == 0)
     274                    break;

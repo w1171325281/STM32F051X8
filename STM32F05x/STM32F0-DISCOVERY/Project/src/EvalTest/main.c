@@ -268,7 +268,7 @@ int main(void)
     // delay 1s in below loop
     for(i=0; i<100; i++)
     {
-      delay_ms(10);
+      delay_ms(100);
       if(GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0))
         if(KeyState == 0)
           break;
